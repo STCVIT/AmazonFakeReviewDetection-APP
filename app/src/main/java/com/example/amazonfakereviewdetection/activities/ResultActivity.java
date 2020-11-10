@@ -14,9 +14,12 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -34,18 +37,16 @@ public class ResultActivity extends AppCompatActivity {
                 .create();
 
 
-        Call<List<ReviewOutput>> reviewOutputCall = RetrofitClient
+
+        Call<ReviewOutput> reviewOutputCall = RetrofitClient
                 .getInstance()
                 .getApi()
                 .getReview();
 
 
-
-
-
-        reviewOutputCall.enqueue(new Callback<List<ReviewOutput>>() {
+        reviewOutputCall.enqueue(new Callback<ReviewOutput>() {
             @Override
-            public void onResponse(Call<List<ReviewOutput>> call, Response<List<ReviewOutput>> response) {
+            public void onResponse(Call<ReviewOutput> call, Response<ReviewOutput> response) {
 
                 if (!response.isSuccessful()) {
                     tvResult.setText("Code: " + response.code());
@@ -53,19 +54,18 @@ public class ResultActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<ReviewOutput> reviewOutputs = response.body();
+                ReviewOutput reviewOutput = response.body();
                 Log.d("GET WORKING",response.message());
-                for (ReviewOutput reviewOutput : reviewOutputs) {
                     String content = "";
                     content += "Percentage: " + reviewOutput.getPercentFakeReview() + "\n";
                     content += "Average Confidence: " + reviewOutput.getAverageConfidence() + "\n";
 
                     tvResult.append(content);
-                }
+
             }
 
             @Override
-            public void onFailure(Call<List<ReviewOutput>> call, Throwable t) {
+            public void onFailure(Call<ReviewOutput> call, Throwable t) {
                 tvResult.setText(t.getMessage());
                 Log.d("GET ERROR",t.getMessage());
             }

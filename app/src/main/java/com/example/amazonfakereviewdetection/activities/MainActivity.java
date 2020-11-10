@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                                  public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                      String s= response.body().toString();
                                      Toast.makeText(MainActivity.this,s,Toast.LENGTH_LONG);
-                                     Log.d("POST SUCCESSFUL",s);
+                                     Log.d("POST SUCCESSFUL",link);
                                      intent = new Intent(MainActivity.this, ResultActivity.class);
                                      startActivity(intent);
                                  }
