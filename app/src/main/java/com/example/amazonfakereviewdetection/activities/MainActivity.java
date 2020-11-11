@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.amazonfakereviewdetection.R;
 import com.example.amazonfakereviewdetection.api.RetrofitClient;
+import com.example.amazonfakereviewdetection.model.ReviewOutput;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -33,33 +34,38 @@ public class MainActivity extends AppCompatActivity {
         btnPost=findViewById(R.id.btnPost);
 
 
-
-
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String link= etLink.getText().toString().trim();
 
-                Call<ResponseBody> call = RetrofitClient
+
+                Call<ReviewOutput> call = RetrofitClient
                         .getInstance()
                         .getApi()
                         .postLink(link);
 
-                call.enqueue(new Callback<ResponseBody>() {
+                call.enqueue(new Callback<ReviewOutput>() {
+
                                  @Override
-                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                     String s= response.body().toString();
-                                     Toast.makeText(MainActivity.this,s,Toast.LENGTH_LONG);
-                                     Log.d("POST SUCCESSFUL",link);
-                                     intent = new Intent(MainActivity.this, ResultActivity.class);
-                                     startActivity(intent);
+                                 public void onResponse(Call<ReviewOutput> call, Response<ReviewOutput> response) {
+
+                                     etLink.setText(" ");
+                                     ReviewOutput reviewOutput= response.body();
+                                     Log.d("GET WORKING",response.message());
+                                     String content = "";
+                                     content += "Percentage: " + reviewOutput.getPercentFakeReview() + "\n";
+                                     content += "Average Confidence: " + reviewOutput.getAverageConfidence() + "\n";
+
+                                     etLink.append(content);
                                  }
 
                                  @Override
-                                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                 public void onFailure(Call<ReviewOutput> call, Throwable t) {
                                      Log.d("CANNOT POSTTTTT", t.getMessage());
                                  }
+
                              }
                 );
             }

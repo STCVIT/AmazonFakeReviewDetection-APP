@@ -32,7 +32,7 @@ public class ResultActivity extends AppCompatActivity {
 
         tvResult=findViewById(R.id.tvResult);
 
-        Gson gson = new GsonBuilder()
+     /*   Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
@@ -56,11 +56,13 @@ public class ResultActivity extends AppCompatActivity {
 
                 ReviewOutput reviewOutput = response.body();
                 Log.d("GET WORKING",response.message());
-                    String content = "";
-                    content += "Percentage: " + reviewOutput.getPercentFakeReview() + "\n";
-                    content += "Average Confidence: " + reviewOutput.getAverageConfidence() + "\n";
+                String content = "";
+                content += "Percentage: " + reviewOutput.getPercentFakeReview() + "\n";
+                content += "Average Confidence: " + reviewOutput.getAverageConfidence() + "\n";
 
-                    tvResult.append(content);
+
+
+                tvResult.append(content);
 
             }
 
@@ -69,6 +71,6 @@ public class ResultActivity extends AppCompatActivity {
                 tvResult.setText(t.getMessage());
                 Log.d("GET ERROR",t.getMessage());
             }
-        });
+        });*/
     }
 }
