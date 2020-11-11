@@ -15,8 +15,6 @@ import retrofit2.http.Url;
 
 public interface JsonPlaceHolderApi {
 
-    @GET("/result")
-    Call<ReviewOutput> getReview();
 
     @FormUrlEncoded
     @POST("/result")

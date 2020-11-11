@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
                 String link= etLink.getText().toString().trim();
 
-
                 Call<ReviewOutput> call = RetrofitClient
                         .getInstance()
                         .getApi()
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
                                      etLink.setText(" ");
                                      ReviewOutput reviewOutput= response.body();
-                                     Log.d("GET WORKING",response.message());
+                                     Log.d("POST WORKING",response.message());
                                      String content = "";
                                      content += "Percentage: " + reviewOutput.getPercentFakeReview() + "\n";
                                      content += "Average Confidence: " + reviewOutput.getAverageConfidence() + "\n";
