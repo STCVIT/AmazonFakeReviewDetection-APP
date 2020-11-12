@@ -1,28 +1,40 @@
 package com.example.amazonfakereviewdetection.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.amazonfakereviewdetection.R;
 import com.example.amazonfakereviewdetection.api.RetrofitClient;
 import com.example.amazonfakereviewdetection.model.ReviewOutput;
 import com.google.android.material.snackbar.Snackbar;
 
-import okhttp3.ResponseBody;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static java.lang.StrictMath.round;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
         imageViewEmoticon=findViewById(R.id.imageviewEmoticon);
         imageViewError=findViewById(R.id.imageviewError);
         tvError=findViewById(R.id.tvError);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#FF6200EE"));
+
+        actionBar.setBackgroundDrawable(colorDrawable);
 
 
         btnPost.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
                                      ReviewOutput reviewOutput= response.body();
                                      Log.d("POST WORKING",response.message());
 
-                                     Double fPercent =  reviewOutput.getPercentFakeReview();
+                                     Double fakePercent =  reviewOutput.getPercentFakeReview();
+                                     double fPercent= round(fakePercent,2);
                                      Double avgConfidence = reviewOutput.getAverageConfidence();
 
                                      if((fPercent==0.0) &&(avgConfidence==0.0)){
@@ -81,28 +104,44 @@ public class MainActivity extends AppCompatActivity {
                                      else if(fPercent>66){
                                          tvText.setVisibility(View.VISIBLE);
                                          tvResult.setVisibility(View.VISIBLE);
-                                         tvResult.setText(fPercent + " " + "reviews are fake. We will suggest you to be completely sure before buying this product");
+                                         String text=(fPercent + "%"+ " " + "reviews are fake. We will suggest you to be completely sure before buying this product.");
                                          imageViewEmoticon.setImageResource(R.drawable.ic_frame_3);
                                          imageViewEmoticon.setVisibility(View.VISIBLE);
                                          imageViewError.setVisibility(View.GONE);
+
+                                         SpannableString ss = new SpannableString(text);
+                                         StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+                                         ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                         tvResult.setText(ss);
+
                                      }
 
                                      else if(fPercent >33){
                                          tvText.setVisibility(View.VISIBLE);
                                          tvResult.setVisibility(View.VISIBLE);
-                                         tvResult.setText(fPercent + " " + "reviews are fake. We will suggest you to ");
+                                         String text= (fPercent + "%"+ " " +"reviews are fake. We will suggest you to think twice before buying this product.");
                                          imageViewEmoticon.setImageResource(R.drawable.ic_frame_2);
                                          imageViewEmoticon.setVisibility(View.VISIBLE);
                                          imageViewError.setVisibility(View.GONE);
+
+                                         SpannableString ss = new SpannableString(text);
+                                         StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+                                         ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                         tvResult.setText(ss);
                                      }
 
                                      else{
                                          tvText.setVisibility(View.VISIBLE);
                                          tvResult.setVisibility(View.VISIBLE);
-                                         tvResult.setText("Only"+ " "+ fPercent + " " + "reviews are fake. We will suggest you to go for this product");
+                                         String text=("Only"+ " "+ fPercent + "%"+ " " + "reviews are fake. We will suggest you to go for this product.");
                                          imageViewEmoticon.setImageResource(R.drawable.ic_frame_1);
                                          imageViewEmoticon.setVisibility(View.VISIBLE);
                                          imageViewError.setVisibility(View.GONE);
+
+                                         SpannableString ss = new SpannableString(text);
+                                         StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+                                         ss.setSpan(boldSpan, 5, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                         tvResult.setText(ss);
                                      }
                                  }
 
@@ -114,6 +153,14 @@ public class MainActivity extends AppCompatActivity {
                 );
             }
         });
+    }
+
+    private double round(Double fakePercent, int i) {
+        if (i < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(fakePercent);
+        bd = bd.setScale(i, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     @Override

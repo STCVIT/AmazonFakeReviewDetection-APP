@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">AmazonFakeReviewDetection</string>
+    <string name="app_name">Amazon Fake Review Detection</string>
     <string name="app_unavailable">Amazon Fake Review Detection is currently unavailable. We are sorry for the inconvenience caused. Please try again later.</string>
 </resources>
