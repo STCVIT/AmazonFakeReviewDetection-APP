@@ -1,81 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    tools:context=".activities.MainActivity">
 
-    <EditText
-        android:id="@+id/etLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="32dp"
-        android:hint="Paste the link from amazon"
-        android:textColor="#000000"
-        android:textColorHint="#C4C4C4"
-        android:textSize="24sp"
-        android:visibility="visible" />
-
-    <Button
-        android:id="@+id/btnPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etLink"
-        android:layout_centerHorizontal="true"
-        android:text="POST LINK"
-        android:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/imageviewEmoticon"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:src="@drawable/ic_frame_1"
-        android:visibility="gone" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="Can you trust these reviews?"
-        android:textColor="#000000"
-        android:textSize="23dp"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/imageviewError"
+            android:layout_width="224dp"
+            android:layout_height="224dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_undraw_online_shopping_re_k1sv" />
 
-    <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageviewEmoticon"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:textColor="#000000"
-        android:textSize="16dp"
-        android:visibility="gone" />
+        <EditText
+            android:id="@+id/etLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageviewError"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:hint="Paste the link from amazon here"
+            android:textColor="#000000"
+            android:textColorHint="#C4C4C4"
+            android:textSize="24sp"
+            android:visibility="visible" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btnPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etLink"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:text="POST LINK"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imageviewEmoticon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvText"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/ic_frame_3"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Can you trust these reviews?"
+            android:textColor="#000000"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageviewEmoticon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="79% of the reviews posted for this product are fake. We suggest you to be sure before buying it."
+            android:textColor="#000000"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageviewError"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/app_unavailable"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
