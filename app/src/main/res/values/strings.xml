@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Amazon Fake Review Detection</string>
+    <string name="content_description">emoticon image</string>
+    <string name="et_hint">Paste the link from amazon here</string>
+    <string name="btn_text">POST LINK</string>
+    <string name="tv_text">Can you trust these reviews?</string>
     <string name="app_unavailable">Amazon Fake Review Detection is currently unavailable. We are sorry for the inconvenience caused. Please try again later.</string>
 </resources>

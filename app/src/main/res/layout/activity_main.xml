@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".activities.MainActivity">
+    android:background="@color/purple_500"
+    tools:context=".activities.MainActivity"
+    android:fillViewport="true"
+    android:padding="16dp">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_layout"
+        tools:ignore="ScrollViewSize">
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imageviewError"
             android:layout_width="224dp"
             android:layout_height="224dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_undraw_online_shopping_re_k1sv" />
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/ic_undraw_online_shopping_re_k1sv"
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/etLink"
@@ -27,13 +45,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imageviewError"
             android:layout_centerInParent="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
             android:layout_marginBottom="32dp"
-            android:hint="Paste the link from amazon here"
+            android:hint="@string/et_hint"
+            android:inputType="text"
             android:textColor="#000000"
             android:textColorHint="#C4C4C4"
             android:textSize="24sp"
@@ -45,55 +64,71 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/etLink"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="POST LINK"
-            android:visibility="visible" />
+            android:text="@string/btn_text"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            app:backgroundTint="@color/purple_500" />
 
         <ImageView
             android:id="@+id/imageviewEmoticon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvText"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginTop="56dp"
+            android:contentDescription="@string/content_description"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:src="@drawable/ic_frame_3"
             android:visibility="gone" />
 
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageviewEmoticon"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#ffffff"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:padding="2dp"
+                android:textStyle="normal"
+                android:visibility="visible" />
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/tvText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Can you trust these reviews?"
-            android:textColor="#000000"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageviewEmoticon"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="79% of the reviews posted for this product are fake. We suggest you to be sure before buying it."
+            android:layout_marginBottom="8dp"
+            android:text="@string/tv_text"
             android:textColor="#000000"
-            android:textSize="20dp"
-            android:textStyle="normal"
+            android:textSize="23dp"
+            android:textStyle="bold"
             android:visibility="gone" />
 
         <TextView
