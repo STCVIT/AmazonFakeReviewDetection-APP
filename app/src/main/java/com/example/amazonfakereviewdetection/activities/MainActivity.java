@@ -4,6 +4,7 @@ package com.example.amazonfakereviewdetection.activities;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
 import android.content.Intent;
@@ -36,13 +37,13 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private EditText etLink;
-    private Button btnPost;
+    private Button btnPost,btn2Post;
     private TextView tvText,tvResult,tvError;
     private ImageView imageViewEmoticon,imageViewError;
     private ProgressBar progressBar;
     private int backButtonCount=0;
     private NestedScrollView parentLayout;
-    private CardView cardView;
+    private CardView cardViewResult,cardViewError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +58,31 @@ public class MainActivity extends AppCompatActivity {
         tvError=findViewById(R.id.tvError);
         progressBar =findViewById(R.id.progressBar);
         parentLayout=findViewById(R.id.parentLayout);
-        cardView=findViewById(R.id.cardView);
+        cardViewResult=findViewById(R.id.cardViewResult);
+        cardViewError=findViewById(R.id.cardViewError);
+        btn2Post=findViewById(R.id.btn2Post);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
+
+        btn2Post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
+                etLink.setText("");
+                imageViewError.setImageResource(R.drawable.ic_undraw_online_shopping_re_k1sv);
+                cardViewError.setVisibility(View.GONE);
+                tvText.setVisibility(View.GONE);
+                cardViewResult.setVisibility(View.GONE);
+                imageViewEmoticon.setVisibility(View.GONE);
+                imageViewError.setVisibility(View.VISIBLE);
+                etLink.setVisibility(View.VISIBLE);
+                btnPost.setVisibility(View.VISIBLE);
+                btn2Post.setVisibility(View.GONE);
+            }
+        });
 
         btnPost.setOnClickListener(v -> {
 
@@ -96,15 +117,18 @@ public class MainActivity extends AppCompatActivity {
 
                                  if((fPercent==0.0) &&(avgConfidence==0.0)){
                                      progressBar.setVisibility(View.GONE);
-                                     tvError.setVisibility(View.VISIBLE);
+                                     cardViewError.setVisibility(View.VISIBLE);
                                      imageViewError.setImageResource(R.drawable.ic_undraw_online_posts_h475);
+                                     btn2Post.setVisibility(View.VISIBLE);
 
                                  }
 
                                  else if(fPercent>66.66){
                                      progressBar.setVisibility(View.GONE);
                                      tvText.setVisibility(View.VISIBLE);
-                                     cardView.setVisibility(View.VISIBLE);
+                                     cardViewResult.setVisibility(View.VISIBLE);
+                                     btn2Post.setVisibility(View.VISIBLE);
+
                                      String text=(fPercent + "%"+ " " + "reviews are fake. We will suggest you to be completely sure before buying this product.");
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_3);
                                      imageViewEmoticon.setVisibility(View.VISIBLE);
@@ -112,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                     parentLayout.setBackgroundColor(getColor(R.color.notatall));
+                                     parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notatall));
                                      tvResult.setText(ss);
 
                                  }
@@ -120,12 +144,14 @@ public class MainActivity extends AppCompatActivity {
                                  else if(fPercent >33.33){
                                      progressBar.setVisibility(View.GONE);
                                      tvText.setVisibility(View.VISIBLE);
-                                     cardView.setVisibility(View.VISIBLE);
+                                     cardViewResult.setVisibility(View.VISIBLE);
+                                     btn2Post.setVisibility(View.VISIBLE);
+
                                      String text= (fPercent + "%"+ " " +"reviews are fake. We will suggest you to think twice before buying this product.");
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_2);
                                      imageViewEmoticon.setVisibility(View.VISIBLE);
                                      imageViewError.setVisibility(View.GONE);
-                                     parentLayout.setBackgroundColor(getColor(R.color.notcompletly));
+                                     parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notcompletly));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -135,12 +161,13 @@ public class MainActivity extends AppCompatActivity {
                                  else{
                                      progressBar.setVisibility(View.GONE);
                                      tvText.setVisibility(View.VISIBLE);
-                                     cardView.setVisibility(View.VISIBLE);
+                                     cardViewResult.setVisibility(View.VISIBLE);
+                                     btn2Post.setVisibility(View.VISIBLE);
                                      String text=("Only"+ " "+ fPercent + "%"+ " " + "reviews are fake. We will suggest you to go for this product.");
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_1);
                                      imageViewEmoticon.setVisibility(View.VISIBLE);
                                      imageViewError.setVisibility(View.GONE);
-                                     parentLayout.setBackgroundColor(getColor(R.color.completly));
+                                     parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.completly));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 5, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -152,8 +179,9 @@ public class MainActivity extends AppCompatActivity {
                              public void onFailure(Call<ReviewOutput> call, Throwable t) {
                                  progressBar.setVisibility(View.GONE);
                                  imageViewError.setVisibility(View.VISIBLE);
-                                 tvError.setVisibility(View.VISIBLE);
                                  imageViewError.setImageResource(R.drawable.ic_undraw_online_posts_h475);
+                                 cardViewError.setVisibility(View.VISIBLE);
+                                 btn2Post.setVisibility(View.VISIBLE);
                                  Log.d("CANNOT POSTTTTT", t.getMessage());
                              }
                          }
@@ -173,22 +201,22 @@ public class MainActivity extends AppCompatActivity {
         backButtonCount++;
         if (backButtonCount == 1) {
 
-            parentLayout.setBackgroundColor(getColor(R.color.purple_500));
+            parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
             etLink.setText("");
             imageViewError.setImageResource(R.drawable.ic_undraw_online_shopping_re_k1sv);
-            tvError.setVisibility(View.GONE);
+            cardViewError.setVisibility(View.GONE);
             tvText.setVisibility(View.GONE);
-            cardView.setVisibility(View.GONE);
+            cardViewResult.setVisibility(View.GONE);
             imageViewEmoticon.setVisibility(View.GONE);
             imageViewError.setVisibility(View.VISIBLE);
             etLink.setVisibility(View.VISIBLE);
             btnPost.setVisibility(View.VISIBLE);
+            btn2Post.setVisibility(View.GONE);
         }
 
         else if (backButtonCount ==2) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 Snackbar.make(findViewById(android.R.id.content),"Press back again to exit.",Snackbar.LENGTH_SHORT).setBackgroundTint(getColor(R.color.purple_500)).setTextColor(Color.WHITE).show();
-            }
+
             backButtonCount++;
         }
 
