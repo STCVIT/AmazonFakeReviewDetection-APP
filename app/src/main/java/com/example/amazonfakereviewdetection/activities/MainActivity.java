@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.amazonfakereviewdetection.R;
 import com.example.amazonfakereviewdetection.api.RetrofitClient;
 import com.example.amazonfakereviewdetection.model.ReviewOutput;
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 imageViewError.setVisibility(View.VISIBLE);
                 etLink.setVisibility(View.VISIBLE);
                 btnPost.setVisibility(View.VISIBLE);
+                btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
                 btn2Post.setVisibility(View.GONE);
             }
         });
@@ -87,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
         btnPost.setOnClickListener(v -> {
 
             String link= etLink.getText().toString().trim();
+            if (link.matches("")) {
+                Snackbar.make(findViewById(android.R.id.content),"Please paste link of the amazon product in the given field",Snackbar.LENGTH_SHORT).setBackgroundTint(ContextCompat.getColor(getApplicationContext(),R.color.purple_500)).setTextColor(Color.WHITE).show();
+                return;
+            }
 
             imageViewError.setVisibility(View.GONE);
             etLink.setVisibility(View.GONE);
@@ -118,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                  if((fPercent==0.0) &&(avgConfidence==0.0)){
                                      progressBar.setVisibility(View.GONE);
                                      cardViewError.setVisibility(View.VISIBLE);
+                                     imageViewError.setVisibility(View.VISIBLE);
                                      imageViewError.setImageResource(R.drawable.ic_undraw_online_posts_h475);
                                      btn2Post.setVisibility(View.VISIBLE);
 
@@ -133,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_3);
                                      imageViewEmoticon.setVisibility(View.VISIBLE);
                                      imageViewError.setVisibility(View.GONE);
+                                     btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notatall));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -152,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                                      imageViewEmoticon.setVisibility(View.VISIBLE);
                                      imageViewError.setVisibility(View.GONE);
                                      parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notcompletly));
+                                     btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notcompletly));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -167,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_1);
                                      imageViewEmoticon.setVisibility(View.VISIBLE);
                                      imageViewError.setVisibility(View.GONE);
+                                     btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.completly));
                                      parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.completly));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
@@ -212,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
             etLink.setVisibility(View.VISIBLE);
             btnPost.setVisibility(View.VISIBLE);
             btn2Post.setVisibility(View.GONE);
+            btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
         }
 
         else if (backButtonCount ==2) {

@@ -8,6 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="completly">#889E5E</color>
-    <color name="notcompletly">#AE6B0F</color>
+    <color name="notcompletly">#E3B64A</color>
     <color name="notatall">#932B23</color>
 </resources>
