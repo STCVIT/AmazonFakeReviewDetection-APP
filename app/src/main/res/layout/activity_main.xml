@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_500"
-    tools:context=".activities.MainActivity"
     android:fillViewport="true"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:visibility="visible"
+    tools:context=".activities.MainActivity">
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_layout"
@@ -25,74 +25,96 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:indeterminateTint="@color/purple_500"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageviewError"
-            android:layout_width="224dp"
-            android:layout_height="224dp"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:contentDescription="@string/content_description"
             android:src="@drawable/ic_undraw_online_shopping_re_k1sv"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTextError" />
 
         <EditText
             android:id="@+id/etLink"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageviewError"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginBottom="32dp"
-            android:hint="@string/et_hint"
+            android:backgroundTint="#000000"
             android:fontFamily="@font/montserrat_regular"
+            android:hint="@string/et_hint"
             android:inputType="text"
             android:textColor="#000000"
             android:textColorHint="#C4C4C4"
             android:textCursorDrawable="@drawable/custom_cursor"
-            android:backgroundTint="#000000"
-            android:textSize="24sp"
-            android:visibility="visible" />
+            android:textSize="20dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/btnPost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageviewError" />
 
         <Button
             android:id="@+id/btnPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="56dp"
-            android:text="@string/btn_text"
             android:fontFamily="@font/montserrat_medium"
+            android:text="@string/btn_text"
             android:textColor="@color/white"
             android:visibility="visible"
-            app:backgroundTint="@color/purple_500" />
+            app:backgroundTint="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etLink" />
 
         <ImageView
             android:id="@+id/imageviewEmoticon"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvText"
+            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:contentDescription="@string/content_description"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/ic_frame_3"
-            android:visibility="gone" />
+            android:src="@drawable/ic_undraw_online_posts_h475"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/cardViewResult"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvText" />
 
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageviewEmoticon"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
@@ -102,61 +124,111 @@
             android:visibility="gone"
             app:cardBackgroundColor="#ffffff"
             app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toTopOf="@id/btn2Post"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageviewEmoticon">
 
             <TextView
                 android:id="@+id/tvResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_marginBottom="16dp"
-                android:padding="2dp"
                 android:fontFamily="@font/montserrat_medium"
+                android:padding="2dp"
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:textStyle="normal"
                 android:visibility="visible" />
         </androidx.cardview.widget.CardView>
 
+
         <TextView
             android:id="@+id/tvText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/tv_text"
             android:fontFamily="@font/montserrat_bold"
+            android:text="@string/tv_text"
             android:textColor="#000000"
             android:textSize="23dp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/imageviewEmoticon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTextError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/tv_text"
+            android:textColor="#000000"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/imageviewError"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn2Post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="56dp"
-            android:text="@string/btn2_text"
             android:fontFamily="@font/montserrat_medium"
+            android:text="@string/btn2_text"
             android:textColor="@color/white"
             android:visibility="gone"
-            app:backgroundTint="@color/purple_500" />
+            app:backgroundTint="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardViewResult" />
+
+        <Button
+            android:id="@+id/btn2PostError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="56dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="@string/btn2_text"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:backgroundTint="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardViewError" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageviewError"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
@@ -166,26 +238,35 @@
             android:visibility="gone"
             app:cardBackgroundColor="#ffffff"
             app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toTopOf="@id/btn2PostError"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageviewError">
+
 
             <TextView
                 android:id="@+id/tvError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                android:padding="2dp"
-                android:text="@string/app_unavailable"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/montserrat_medium"
+                android:padding="2dp"
+                android:paddingLeft="4dp"
+                android:text="@string/app_unavailable"
                 android:textColor="#000000"
-                android:textSize="16dp"/>
+                android:textSize="20dp"
+                android:textStyle="normal"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="-4dp"
+                tools:layout_editor_absoluteY="332dp" />
+
         </androidx.cardview.widget.CardView>
-
-
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
