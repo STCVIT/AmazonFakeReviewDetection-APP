@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.amazonfakereviewdetection.R;
 import com.example.amazonfakereviewdetection.api.RetrofitClient;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etLink;
     private Button btnPost,btn2Post;
-    private TextView tvText,tvResult,tvError;
+    private TextView tvText,tvResult,btn2PostError;
     private ImageView imageViewEmoticon,imageViewError;
     private ProgressBar progressBar;
     private int backButtonCount=0;
@@ -51,41 +51,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        etLink =findViewById(R.id.etLink);
-        btnPost=findViewById(R.id.btnPost);
-        tvText= findViewById(R.id.tvText);
-        tvResult=findViewById(R.id.tvResult);
-        imageViewEmoticon=findViewById(R.id.imageviewEmoticon);
-        imageViewError=findViewById(R.id.imageviewError);
-        tvError=findViewById(R.id.tvError);
-        progressBar =findViewById(R.id.progressBar);
-        parentLayout=findViewById(R.id.parentLayout);
-        cardViewResult=findViewById(R.id.cardViewResult);
-        cardViewError=findViewById(R.id.cardViewError);
-        btn2Post=findViewById(R.id.btn2Post);
+
+        findViewById();
+        customLayout();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
 
-        btn2Post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn2PostError.setOnClickListener(v -> customLayout());
 
-                parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
-                etLink.setText("");
-                imageViewError.setImageResource(R.drawable.ic_undraw_online_shopping_re_k1sv);
-                cardViewError.setVisibility(View.GONE);
-                tvText.setVisibility(View.GONE);
-                cardViewResult.setVisibility(View.GONE);
-                imageViewEmoticon.setVisibility(View.GONE);
-                imageViewError.setVisibility(View.VISIBLE);
-                etLink.setVisibility(View.VISIBLE);
-                btnPost.setVisibility(View.VISIBLE);
-                btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
-                btn2Post.setVisibility(View.GONE);
-            }
-        });
+        btn2Post.setOnClickListener(v -> customLayout());
 
         btnPost.setOnClickListener(v -> {
 
@@ -114,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                                  backButtonCount=0;
                                  etLink.setText(" ");
 
-
                                  ReviewOutput reviewOutput= response.body();
                                  Log.d("POST WORKING",response.message());
 
@@ -123,82 +98,112 @@ public class MainActivity extends AppCompatActivity {
                                  double avgConfidence = reviewOutput.getAverageConfidence();
 
                                  if((fPercent==0.0) &&(avgConfidence==0.0)){
-                                     progressBar.setVisibility(View.GONE);
-                                     cardViewError.setVisibility(View.VISIBLE);
-                                     imageViewError.setVisibility(View.VISIBLE);
-                                     imageViewError.setImageResource(R.drawable.ic_undraw_online_posts_h475);
-                                     btn2Post.setVisibility(View.VISIBLE);
-
+                                   errorLayout();
                                  }
 
                                  else if(fPercent>66.66){
-                                     progressBar.setVisibility(View.GONE);
-                                     tvText.setVisibility(View.VISIBLE);
-                                     cardViewResult.setVisibility(View.VISIBLE);
-                                     btn2Post.setVisibility(View.VISIBLE);
 
                                      String text=(fPercent + "%"+ " " + "reviews are fake. We will suggest you to be completely sure before buying this product.");
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_3);
-                                     imageViewEmoticon.setVisibility(View.VISIBLE);
-                                     imageViewError.setVisibility(View.GONE);
                                      btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notatall));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                      parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notatall));
                                      tvResult.setText(ss);
+                                     successLayout();
 
                                  }
 
                                  else if(fPercent >33.33){
-                                     progressBar.setVisibility(View.GONE);
-                                     tvText.setVisibility(View.VISIBLE);
-                                     cardViewResult.setVisibility(View.VISIBLE);
-                                     btn2Post.setVisibility(View.VISIBLE);
 
                                      String text= (fPercent + "%"+ " " +"reviews are fake. We will suggest you to think twice before buying this product.");
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_2);
-                                     imageViewEmoticon.setVisibility(View.VISIBLE);
-                                     imageViewError.setVisibility(View.GONE);
                                      parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notcompletly));
                                      btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.notcompletly));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                      tvResult.setText(ss);
+                                     successLayout();
                                  }
 
                                  else{
-                                     progressBar.setVisibility(View.GONE);
-                                     tvText.setVisibility(View.VISIBLE);
-                                     cardViewResult.setVisibility(View.VISIBLE);
-                                     btn2Post.setVisibility(View.VISIBLE);
+
                                      String text=("Only"+ " "+ fPercent + "%"+ " " + "reviews are fake. We will suggest you to go for this product.");
                                      imageViewEmoticon.setImageResource(R.drawable.ic_frame_1);
-                                     imageViewEmoticon.setVisibility(View.VISIBLE);
-                                     imageViewError.setVisibility(View.GONE);
                                      btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.completly));
                                      parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.completly));
                                      SpannableString ss = new SpannableString(text);
                                      StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
                                      ss.setSpan(boldSpan, 5, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                      tvResult.setText(ss);
+                                     successLayout();
                                  }
                              }
 
                              @Override
                              public void onFailure(Call<ReviewOutput> call, Throwable t) {
-                                 progressBar.setVisibility(View.GONE);
-                                 imageViewError.setVisibility(View.VISIBLE);
-                                 imageViewError.setImageResource(R.drawable.ic_undraw_online_posts_h475);
-                                 cardViewError.setVisibility(View.VISIBLE);
-                                 btn2Post.setVisibility(View.VISIBLE);
+                                 errorLayout();
                                  Log.d("CANNOT POSTTTTT", t.getMessage());
                              }
                          }
             );
         });
     }
+
+    private void findViewById(){
+        etLink =findViewById(R.id.etLink);
+        btnPost=findViewById(R.id.btnPost);
+        tvText= findViewById(R.id.tvText);
+        tvResult=findViewById(R.id.tvResult);
+        imageViewEmoticon=findViewById(R.id.imageviewEmoticon);
+        imageViewError=findViewById(R.id.imageviewError);
+        progressBar =findViewById(R.id.progressBar);
+        parentLayout=findViewById(R.id.parentLayout);
+        cardViewResult=findViewById(R.id.cardViewResult);
+        cardViewError=findViewById(R.id.cardViewError);
+        btn2Post=findViewById(R.id.btn2Post);
+        btn2PostError=findViewById(R.id.btn2PostError);
+    }
+
+    private void customLayout(){
+        parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
+        etLink.setText("");
+        imageViewError.setImageResource(R.drawable.ic_undraw_online_shopping_re_k1sv);
+        cardViewError.setVisibility(View.GONE);
+        tvText.setVisibility(View.GONE);
+        cardViewResult.setVisibility(View.GONE);
+        imageViewEmoticon.setVisibility(View.GONE);
+        imageViewError.setVisibility(View.VISIBLE);
+        etLink.setVisibility(View.VISIBLE);
+        btnPost.setVisibility(View.VISIBLE);
+        btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
+        btn2Post.setVisibility(View.GONE);
+        btn2PostError.setVisibility(View.GONE);
+    }
+
+
+    private void errorLayout(){
+        progressBar.setVisibility(View.GONE);
+        imageViewError.setVisibility(View.VISIBLE);
+        imageViewError.setImageResource(R.drawable.ic_undraw_online_posts_h475);
+        cardViewError.setVisibility(View.VISIBLE);
+        btn2PostError.setVisibility(View.VISIBLE);
+
+    }
+
+    private void successLayout(){
+        progressBar.setVisibility(View.GONE);
+        tvText.setVisibility(View.VISIBLE);
+        cardViewResult.setVisibility(View.VISIBLE);
+        btn2Post.setVisibility(View.VISIBLE);
+        imageViewError.setVisibility(View.GONE);
+        imageViewEmoticon.setVisibility(View.VISIBLE);
+
+    }
+
+
 
     private double round(Double fakePercent) {
         BigDecimal bd = BigDecimal.valueOf(fakePercent);
@@ -212,22 +217,11 @@ public class MainActivity extends AppCompatActivity {
         backButtonCount++;
         if (backButtonCount == 1) {
 
-            parentLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
-            etLink.setText("");
-            imageViewError.setImageResource(R.drawable.ic_undraw_online_shopping_re_k1sv);
-            cardViewError.setVisibility(View.GONE);
-            tvText.setVisibility(View.GONE);
-            cardViewResult.setVisibility(View.GONE);
-            imageViewEmoticon.setVisibility(View.GONE);
-            imageViewError.setVisibility(View.VISIBLE);
-            etLink.setVisibility(View.VISIBLE);
-            btnPost.setVisibility(View.VISIBLE);
-            btn2Post.setVisibility(View.GONE);
-            btn2Post.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.purple_500));
+            customLayout();
         }
 
         else if (backButtonCount ==2) {
-                Snackbar.make(findViewById(android.R.id.content),"Press back again to exit.",Snackbar.LENGTH_SHORT).setBackgroundTint(getColor(R.color.purple_500)).setTextColor(Color.WHITE).show();
+            Snackbar.make(findViewById(android.R.id.content),"Press back again to exit.",Snackbar.LENGTH_SHORT).setBackgroundTint(getColor(R.color.purple_500)).setTextColor(Color.WHITE).show();
 
             backButtonCount++;
         }
@@ -240,5 +234,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
 
 }
